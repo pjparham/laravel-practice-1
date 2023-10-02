@@ -14,21 +14,26 @@
             <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-8">
                 <!--  Category -->
                 <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl">
-                    <div x-data="{ show: false }" @click.away="show = false">
-                        <button
-                            @click="show = !show"
-                            class=" py-2 pl-3 pr-9 text-sm font-semibold w-32 text-left flex lg:inline-flex"
-                        >
-                            {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Categories' }}
-                        </button>
-
-                        <div x-show="show" class="py-2 absolute bg-gray-100 w-32 mt-2 rounded-xl z-40" style="display: none">
-                            <a href="/" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:text-white">All</a>
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <button
+                                class=" py-2 pl-3 pr-9 text-sm font-semibold w-32 text-left flex lg:inline-flex"
+                            >
+                                {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Categories' }}
+                            </button>
+                        </x-slot>
+                        <a href="/" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:text-white">All</a>
                         @foreach($categories as $category)
-                                <a href="/categories/{{$category->slug}}" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:text-white">{{$category->name}}</a>
-                            @endforeach
-                        </div>
-                    </div>
+                            <a href="/categories/{{$category->slug}}"
+                               class="
+                                   block text-left px-3 text-sm leading-6
+                                   hover:bg-blue-500 hover:text-white focus:text-white
+                                   {{ isset($currentCategory) && $currentCategory->is($category) ?  'bg-blue-500 text-white' : ''}}
+                                   "
+                            >{{$category->name}}</a>
+                        @endforeach
+                    </x-dropdown>
+
 
 {{--                    <select class="flex-1 appearance-none bg-transparent py-2 pl-3 pr-9 text-sm font-semibold">--}}
 {{--                        <option value="category" disabled selected>Category--}}
