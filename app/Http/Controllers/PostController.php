@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->with('category', 'author')->filter(request(['search', 'category']));
+        $posts = Post::latest()->with('category', 'author')->filter(request(['search', 'category', 'author']));
 
 
 
